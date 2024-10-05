@@ -1,4 +1,4 @@
-package com.example.Authenticator;
+package com.example.Authenticator.entity;
 
 import lombok.Data;
 
@@ -11,7 +11,5 @@ public class Customers {
     private String phone;
     private String timeZone;
     private final String oDataType = "#microsoft.graph.bookingCustomerInformation";
-
-
 
 }

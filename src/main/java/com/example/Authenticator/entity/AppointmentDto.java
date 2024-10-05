@@ -1,11 +1,11 @@
-package com.example.Authenticator;
+package com.example.Authenticator.entity;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class AppointmentDTO {
+public class AppointmentDto {
 
     private DateTimeWrapper startDateTime;
     private DateTimeWrapper endDateTime;

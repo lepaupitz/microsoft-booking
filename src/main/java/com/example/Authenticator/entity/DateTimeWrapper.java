@@ -1,4 +1,4 @@
-package com.example.Authenticator;
+package com.example.Authenticator.entity;
 
 import lombok.Data;
 
