@@ -3,19 +3,19 @@ package com.example.Authenticator.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 @Data
 public class TimeSlot {
 
-    private String staffId;
-    private LocalDateTime start;
+        private LocalDateTime start;
     private LocalDateTime end;
 
-    public TimeSlot(LocalDateTime start, LocalDateTime end, String staffId) {
+    public TimeSlot(LocalDateTime start, LocalDateTime end) {
         this.start = start;
         this.end = end;
-        this.staffId = staffId;
+
     }
 
     public LocalDateTime getStart() {
@@ -34,21 +34,25 @@ public class TimeSlot {
         this.end = end;
     }
 
-    public String getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
-    }
-
 
     @Override
     public String toString() {
         return "TimeSlot{" +
-                "staffId='" + staffId + '\'' +
                 ", startDateTime=" + start +
                 ", endDateTime=" + end +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TimeSlot)) return false;
+        TimeSlot timeSlot = (TimeSlot) o;
+        return Objects.equals(start, timeSlot.start) && Objects.equals(end, timeSlot.end);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, end);
     }
 }

@@ -36,7 +36,7 @@ public class GraphController {
             @PathVariable String serviceId,
             @RequestBody StaffAvailabilityRequestDto staffAvailabilityRequestDTO) {
 
-        return graphService.listStaffAvailability(
+        return graphService.listStaffAvailabilityAvailable(
                 businessId,
                 serviceId,
                 staffAvailabilityRequestDTO.getStartDateTime(),
@@ -69,7 +69,10 @@ public class GraphController {
             DateTimeWrapper endWrapper = request.getEndDateTime();
 
             List<TimeSlot> timeSlots = graphService.splitAvailabilityByServiceDuration(
-                    bookingBusinessId, serviceId, startWrapper, endWrapper);
+                    bookingBusinessId,
+                    serviceId,
+                    startWrapper,
+                    endWrapper);
 
             return ResponseEntity.ok(timeSlots);
 
@@ -105,5 +108,22 @@ public class GraphController {
             return ResponseEntity.ok(rescheduledAppointment);
 
     }
+
+    @PostMapping("/busy/{businessId}/{serviceId}")
+    public List<String> listStaffAvailabilityBusy(
+            @PathVariable String businessId,
+            @PathVariable String serviceId,
+            @RequestBody StaffAvailabilityRequestDto staffAvailabilityRequestDTO) {
+
+        return graphService.listStaffMemberIdServicesByAvailability(
+                businessId,
+                serviceId,
+                staffAvailabilityRequestDTO.getStartDateTime(),
+                staffAvailabilityRequestDTO.getEndDateTime()
+        );
+
+    }
+
+
 
 }
