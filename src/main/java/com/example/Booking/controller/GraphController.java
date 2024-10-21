@@ -1,7 +1,7 @@
-package com.example.Authenticator.controller;
+package com.example.Booking.controller;
 
-import com.example.Authenticator.service.GraphService;
-import com.example.Authenticator.entity.*;
+import com.example.Booking.service.GraphService;
+import com.example.Booking.entity.*;
 import com.microsoft.graph.models.BookingAppointment;
 import com.microsoft.kiota.PeriodAndDuration;
 import org.springframework.beans.factory.annotation.Autowired;

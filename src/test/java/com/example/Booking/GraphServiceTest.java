@@ -1,5 +1,5 @@
 
-package com.example.Authenticator;
+package com.example.Booking;
 
 public class GraphServiceTest {
 

@@ -1,4 +1,4 @@
-package com.example.Authenticator.entity;
+package com.example.Booking.entity;
 
 import com.microsoft.graph.models.DateTimeTimeZone;
 import lombok.Data;

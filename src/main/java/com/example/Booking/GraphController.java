@@ -1,4 +1,4 @@
-package com.example.Authenticator;
+package com.example.Booking;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

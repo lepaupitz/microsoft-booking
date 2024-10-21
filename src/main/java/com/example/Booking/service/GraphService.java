@@ -1,10 +1,10 @@
-package com.example.Authenticator.service;
+package com.example.Booking.service;
 
 import com.azure.identity.ClientSecretCredential;
 import com.azure.identity.ClientSecretCredentialBuilder;
-import com.example.Authenticator.entity.*;
-import com.example.Authenticator.entity.AvailabilityItem;
-import com.example.Authenticator.entity.TimeSlot;
+import com.example.Booking.entity.*;
+import com.example.Booking.entity.AvailabilityItem;
+import com.example.Booking.entity.TimeSlot;
 import com.microsoft.graph.models.*;
 import com.microsoft.graph.serviceclient.GraphServiceClient;
 import com.microsoft.graph.solutions.bookingbusinesses.item.getstaffavailability.GetStaffAvailabilityPostRequestBody;
@@ -111,7 +111,7 @@ public class GraphService {
         return getStaffAvailabilityPostRequestBody;
     }
 
-    private List<com.example.Authenticator.entity.AvailabilityItem> filterAvailabilityStaffAvailable(List<com.example.Authenticator.entity.AvailabilityItem> availabilityItems) {
+    private List<com.example.Booking.entity.AvailabilityItem> filterAvailabilityStaffAvailable(List<com.example.Booking.entity.AvailabilityItem> availabilityItems) {
         return availabilityItems.stream()
                 .filter(item -> "Available".equalsIgnoreCase(item.getStatus()))
                 .collect(Collectors.toList());
@@ -331,7 +331,7 @@ public class GraphService {
                 .collect(Collectors.toList());
     }
 
-    private List<com.example.Authenticator.entity.AvailabilityItem> filterAvailabilityStaffBusy(List<com.example.Authenticator.entity.AvailabilityItem> availabilityItems) {
+    private List<com.example.Booking.entity.AvailabilityItem> filterAvailabilityStaffBusy(List<com.example.Booking.entity.AvailabilityItem> availabilityItems) {
         return availabilityItems.stream()
                 .filter(item -> "Busy".equalsIgnoreCase(item.getStatus()))
                 .collect(Collectors.toList());
