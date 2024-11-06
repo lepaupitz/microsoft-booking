@@ -1,43 +1,32 @@
 package com.example.Booking.service;
 
-import com.azure.identity.ClientSecretCredential;
-import com.azure.identity.ClientSecretCredentialBuilder;
-import com.example.Booking.entity.*;
+import com.example.Booking.config.MicrosoftGraphClientConfig;
 import com.example.Booking.entity.AvailabilityItem;
 import com.example.Booking.entity.TimeSlot;
+import com.example.Booking.entity.*;
 import com.microsoft.graph.models.*;
 import com.microsoft.graph.serviceclient.GraphServiceClient;
 import com.microsoft.graph.solutions.bookingbusinesses.item.getstaffavailability.GetStaffAvailabilityPostRequestBody;
 import com.microsoft.graph.solutions.bookingbusinesses.item.getstaffavailability.GetStaffAvailabilityPostResponse;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
-public class GraphService {
+public class MicrosoftGraphService {
 
-    @Autowired
-    AuthProperties authProperties;
+    private final MicrosoftGraphClientConfig graphClientConfig;
 
-
-
-    private GraphServiceClient createGraphClient() {
-        ClientSecretCredential clientSecretCredential = new ClientSecretCredentialBuilder()
-                .clientId(authProperties.getClientId())
-                .clientSecret(authProperties.getClientSecret())
-                .tenantId(authProperties.getTenantId())
-                .build();
-
-        String[] scopes = {"https://graph.microsoft.com/.default"};
-
-        return new GraphServiceClient(clientSecretCredential, scopes);
+    public GraphServiceClient createGraphClient() {
+        return graphClientConfig.graphClient();
     }
 
     public List<String> listStaffMemberIdServices(String businessId, String serviceId) {
@@ -75,14 +64,14 @@ public class GraphService {
         return getStaffAvailabilityAvailable(response);
     }
 
-    private List<StaffAvailabilityResponseDto> getStaffAvailabilityAvailable(GetStaffAvailabilityPostResponse response) {
+    public List<StaffAvailabilityResponseDto> getStaffAvailabilityAvailable(GetStaffAvailabilityPostResponse response) {
         List<StaffAvailabilityResponseDto> filteredResponse = response.getValue().stream()
                 .map(staffAvailabilityItem -> {
                     StaffAvailabilityResponseDto dto = new StaffAvailabilityResponseDto();
                     dto.setStaffId(staffAvailabilityItem.getStaffId());
 
                     List<AvailabilityItem> availabilityItems = filterAvailabilityStaffAvailable(staffAvailabilityItem.getAvailabilityItems().stream()
-                            .map(GraphService::apply)
+                            .map(MicrosoftGraphService::apply)
                             .collect(Collectors.toList()));
 
                     dto.setAvailabilityItems(availabilityItems);
@@ -322,7 +311,7 @@ public class GraphService {
                     dto.setStaffId(staffAvailabilityItem.getStaffId());
 
                     List<AvailabilityItem> availabilityItems = filterAvailabilityStaffBusy(Objects.requireNonNull(staffAvailabilityItem.getAvailabilityItems()).stream()
-                            .map(GraphService::apply)
+                            .map(MicrosoftGraphService::apply)
                             .collect(Collectors.toList()));
 
                     dto.setAvailabilityItems(availabilityItems);

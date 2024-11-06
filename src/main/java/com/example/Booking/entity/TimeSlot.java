@@ -9,7 +9,7 @@ import java.util.Objects;
 @Data
 public class TimeSlot {
 
-        private LocalDateTime start;
+    private LocalDateTime start;
     private LocalDateTime end;
 
     public TimeSlot(LocalDateTime start, LocalDateTime end) {
